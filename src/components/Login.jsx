@@ -8,9 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-export const Login = ({ setTypeUser }) => {
+export const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       user: "",
@@ -21,10 +23,8 @@ export const Login = ({ setTypeUser }) => {
         (values.user === "admin" || values.user === "user") &&
         values.password === "123"
       ) {
-        console.log("entre");
-        setTypeUser(values.user);
-      } else {
-        setTypeUser(null);
+        localStorage.setItem("isAuthenticated", values.user);
+        navigate("/home");
       }
       resetForm();
     },
